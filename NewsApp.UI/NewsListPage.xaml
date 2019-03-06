@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms"
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		xmlns:local="clr-namespace:NewsApp"
+		x:Class="NewsApp.NewsListPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+	  <local:HumanizerConverter x:Key="humanizer" />
+	</ResourceDictionary>
+  </ContentPage.Resources>
+<AbsoluteLayout>
+    <ListView 
+    	AbsoluteLayout.LayoutBounds="0,0,1,1"
+    	AbsoluteLayout.LayoutFlags="All"
+    	IsPullToRefreshEnabled="true"
+    	x:Name="ItemsList"
+    	HasUnevenRows="true"
+    	RowHeight="-1"
+    	ItemTapped="Handle_ItemTapped">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Vertical" Padding="10" Spacing="2">
+                        <Label Text="{Binding Title}" FontAttributes="Bold" />
+        				<Grid>
+        					<Grid.ColumnDefinitions>
+        						<ColumnDefinition Width="*" />
+        					    <ColumnDefinition Width="{Binding ImageColumnSize}" />
+        					</Grid.ColumnDefinitions>
+        					<Grid.RowDefinitions>
+        						<RowDefinition Height="Auto" />
+        						<RowDefinition Height="Auto" />
+        					</Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding PubDate, Converter={StaticResource humanizer}}" FontSize="11" TextColor="Gray" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Description}" FontSize="13" />
+        					<Image Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" IsVisible="{Binding ShowImage}" Source="{Binding Thumbnail}" WidthRequest="100" />
+        				</Grid>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+  	
+    <local:FilterTableView
+    		Margin="5"
+    		IsVisible="false"
+    		AbsoluteLayout.LayoutBounds="1, 0, 200, 200"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+    		x:Name="FilterTable"
+    		BackgroundColor="#efeff4"
+    />
+            
+</AbsoluteLayout>
+</ContentPage>
